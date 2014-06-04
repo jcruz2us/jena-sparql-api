@@ -75,28 +75,28 @@ public class SparqlEndpointProxy
 	@Override
 	public QueryExecution createQueryExecution(Query query) {
 
-        //create a query execution over dbpedia
+		//create a query execution over dbpedia
 		String serviceUri = "http://dbpedia.org/sparql";
 		QueryExecutionFactory qef = new QueryExecutionFactoryHttp(serviceUri);
 
-        //setup caching
-        try {
-            //cache for a day
-            //name the db 'sparql' and use compression
-            long ttl = 24l * 60l * 60l * 1000l;
-            CacheBackend cacheBackend = CacheCoreH2.create("sparql", ttl, true);
-            CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
+		//setup caching
+		try {
+			//cache for a day
+			//name the db 'sparql' and use compression
+			long ttl = 24l * 60l * 60l * 1000l;
+			CacheBackend cacheBackend = CacheCoreH2.create("sparql", ttl, true);
+			CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
 
-            qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        QueryExecution result = qef.createQueryExecution(query);
+		QueryExecution result = qef.createQueryExecution(query);
 
 		return result;
-    }
+	}
 }
 
