@@ -179,13 +179,13 @@ public class CacheCoreH2
                 Timestamp timestamp = rs.getTimestamp("time");
                 Blob data = rs.getBlob("data");
 
+                return new CacheEntryImpl(timestamp.getTime(), lifespan, new InputStreamProviderResultSetBlob(rs, data).open(), queryString, queryHash);
                 //return new CacheEntryImpl(timestamp.getTime(), lifespan, new InputStreamProviderResultSetBlob(rs, data), queryString, queryHash);
-                //return new CacheEntryImpl(timestamp.getTime(), lifespan, new InputStreamProviderResultSetBlob(rs, data), queryString, queryHash);
-                if(true) {
-                    throw new RuntimeException("Deprecated; do not use");
-                }
+//                if(true) {
+//                    throw new RuntimeException("Deprecated; do not use");
+//                }
 
-                return null;
+//                return null;
             }
 
             @Override
@@ -230,10 +230,10 @@ public class CacheCoreH2
                     }
                 }
 
-                //return new CacheEntryBase(timestamp.getTime(), lifespan, new InputStreamProviderResultSetBlob(rs, data));
-                if(true) {
-                    throw new RuntimeException("Deprecated; do not use");
-                }
+                return new CacheEntryBase(timestamp.getTime(), lifespan, new InputStreamProviderResultSetBlob(rs, data).open());
+//                if(true) {
+//                    throw new RuntimeException("Deprecated; do not use");
+//                }
             }
 
             if(rs.next()) {
