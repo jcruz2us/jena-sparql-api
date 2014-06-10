@@ -92,13 +92,6 @@ public class SparqlEndpointProxy
 			//name the db 'sparql' and use compression
 			long ttl = 24l * 60l * 60l * 1000l;
 			
-			//Class.forName("org.h2.Driver");
-			
-			//JdbcDataSource dataSource = new JdbcDataSource();
-	        //dataSource.setURL("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
-	        //dataSource.setUser("sa");
-	        //dataSource.setPassword("sa");
-	        
 			DataSource dataSource = new CacheDataSource();
 			
 	        String sql = ""
@@ -127,9 +120,6 @@ public class SparqlEndpointProxy
 			CacheBackendDao dao = new CacheBackendDaoPostgres();
 	        CacheBackend cacheBackend = new CacheBackendDataSource(dataSource, dao);
 	        CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
-			
-			//CacheBackend cacheBackend = CacheCoreH2.create("sparql", ttl, true);
-			//CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
 
 			qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);
 		} catch (SQLException e) {
