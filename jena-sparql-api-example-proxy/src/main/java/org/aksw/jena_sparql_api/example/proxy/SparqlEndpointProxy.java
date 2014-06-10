@@ -81,14 +81,13 @@ public class SparqlEndpointProxy
 
 	@Override
 	public QueryExecution createQueryExecution(Query query) {
-
 		//create a query execution over dbpedia
 		String serviceUri = "http://dbpedia.org/sparql";
 		QueryExecutionFactory qef = new QueryExecutionFactoryHttp(serviceUri);
 
 		try {
 			CacheDataSource dataSource = new CacheDataSource();
-			dataSource.initialize(); //initialize the datasource
+			dataSource.initialize(); //create the necessary tables and indexes if necessary
 			CacheBackendDao dao = new CacheBackendDaoPostgres();
 			CacheBackend cacheBackend = new CacheBackendDataSource(dataSource, dao);
 			CacheFrontend cacheFrontend = new CacheFrontendImpl(cacheBackend);
@@ -98,8 +97,6 @@ public class SparqlEndpointProxy
 		}
 
 		QueryExecution result = qef.createQueryExecution(query);
-
 		return result;
 	}
 }
-
